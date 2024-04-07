@@ -28,7 +28,9 @@ namespace ChessGameProject
         internal static int whiteMoveCount = 0;          // White move count
         internal static int blackMoveCount = 0;         // Black move count
         public ChessLog form2;                            // Form2 object  
-
+        public Color currentLightColor = Color.White; // Default light square color
+        public Color currentDarkColor = Color.Gray; // Default dark square color
+        private Color lastClickedColor;
 
         public Chessboard()
         {
@@ -46,17 +48,18 @@ namespace ChessGameProject
         public void UpdateSquareColors(int trackBar1Value, int trackBar2Value)
         {
             // Convert trackBar values to color shades
-            Color lightColor = CalculateColor(trackBar1Value, true);
-            Color darkColor = CalculateColor(trackBar2Value, false);
+            currentLightColor = CalculateColor(trackBar1Value, true);
+            currentDarkColor = CalculateColor(trackBar2Value, false);
 
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    squares[i, j].BackColor = (i + j) % 2 == 0 ? lightColor : darkColor;
+                    squares[i, j].BackColor = (i + j) % 2 == 0 ? currentLightColor : currentDarkColor;
                 }
             }
         }
+
 
         // This method calculates the color based on the value and whether it's for light or dark squares.
         public Color CalculateColor(int value, bool isForLightSquares)
@@ -88,61 +91,68 @@ namespace ChessGameProject
         {
             // Attempt to cast the sender object to a Button
             Button clickedButton = sender as Button;
-            if (clickedButton == null) return; // If casting fails, return
+            // If casting fails, exit the method
+            if (clickedButton == null) return;
 
-            // Extract the location information from the button's Tag property
-            if (!(clickedButton.Tag is Point location)) return; // If the Tag is not a Point, return
+            // Check if the button's Tag property contains a Point object
+            if (!(clickedButton.Tag is Point location)) return;
 
-            // Extract the coordinates (x, y) from the Point
+            // Extract the X and Y coordinates from the Point
             int x = location.X;
             int y = location.Y;
 
-            // Check if the coordinates are within the valid range of the chessboard (8x8 grid)
+            // Validate the coordinates to ensure they are within the bounds of the chessboard
             if (x < 0 || y < 0 || x >= 8 || y >= 8) return;
 
-            // If no previous button was clicked
+            // If this is the first click on a button
             if (lastClicked == null)
             {
-                // Check if there's a piece on the clicked button and if it's the current player's turn
+                // Verify there is a piece at the clicked location and it's the correct player's turn
                 if (pieces[x, y] == null || pieces[x, y].Color != currentPlayerTurn) return;
 
-                // Set the clicked button as the last clicked button
+                // Store the clicked button and its location for reference
                 lastClicked = clickedButton;
                 lastClickedX = x;
                 lastClickedY = y;
-                clickedButton.BackColor = Color.LightBlue; // Change background color to indicate selection
+                // Remember the original color of the square to restore it later
+                lastClickedColor = clickedButton.BackColor;
+                // Change the background color to indicate selection
+                clickedButton.BackColor = Color.LightBlue;
             }
-            else // If a previous button was clicked
+            else // If a button was already selected
             {
-                if (x != lastClickedX || y != lastClickedY) // If the clicked button is different from the last clicked button
+                // If the new click is on a different square from the original
+                if (x != lastClickedX || y != lastClickedY)
                 {
-                    // Attempt to move the piece to the clicked button's location
-                    MovePiece(lastClickedX, lastClickedY, x, y); // Pass the coordinates of both buttons
-                    squares[lastClickedX, lastClickedY].BackColor = (lastClickedX + lastClickedY) % 2 == 0 ? Color.White : Color.Gray;
-                    lastClicked = null; // Reset the last clicked button
+                    // Attempt to move the piece to the new location
+                    MovePiece(lastClickedX, lastClickedY, x, y);
+                    // Update the colors of all squares to reflect the current scheme
+                    RefreshSquareColors();
                 }
                 else // If the same button was clicked again
                 {
-                    // Deselect the button
-                    lastClicked.BackColor = (lastClickedX + lastClickedY) % 2 == 0 ? Color.White : Color.Gray;
-                    lastClicked = null; // Reset the last clicked button
+                    // Deselect the button by restoring its original color
+                    lastClicked.BackColor = lastClickedColor;
                 }
+                // Clear the reference to the last clicked button
+                lastClicked = null;
             }
         }
 
-        // This method moves a piece from its starting position to an end position on the chessboard.
+
+        // This method moves a piece from the start position to the end position on the chessboard.
         public void MovePiece(int startX, int startY, int endX, int endY)
         {
-            // Check if there is a valid last clicked button or if there is a piece at the starting position
+            // Exit if no piece was previously selected or if there's no piece at the start position
             if (lastClicked == null || pieces[startX, startY] == null) return;
 
-            // Get the piece to be moved from the starting position
+            // Retrieve the piece to be moved
             Piece pieceToMove = pieces[startX, startY];
 
-            // Check if the move is valid according to the rules of the piece
+            // Check if the intended move is valid for the selected piece
             if (pieceToMove.IsValidMove(startX, startY, endX, endY))
             {
-                // Log the movement description
+                // Record move details for the movement log
                 string pieceColor = pieceToMove.Color;
                 string pieceType = pieceToMove.GetType().Name;
                 string startSquare = ConvertToChessNotation(startX, startY);
@@ -150,93 +160,130 @@ namespace ChessGameProject
                 string moveDescription = $"{pieceColor} {pieceType} moved from {startSquare} to {endSquare}";
                 form2.LogMovement(moveDescription);
 
-                // Check if the piece captured the opponent's king
+                // If the move captures the opponent's king, declare game over
                 if (pieces[endX, endY] is King)
                 {
                     string winner = pieceToMove.Color == "white" ? "White" : "Black";
                     MessageBox.Show($"{winner} is the Winner", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ResetBoard(); // Reset the board to its initial state
+                    ResetBoard();
                     return;
                 }
 
-                // Update the piece's position on the board
+                // Update the board's logical state
                 pieces[endX, endY] = pieceToMove;
                 pieces[startX, startY] = null;
 
-                // Update the visual representation of the piece on the chessboard
+                // Update the board's visual state
                 squares[endX, endY].BackgroundImage = squares[startX, startY].BackgroundImage;
                 squares[endX, endY].BackgroundImageLayout = ImageLayout.Stretch;
                 squares[startX, startY].BackgroundImage = null;
 
-                // Handle castling if the moved piece is a king and castling is performed
+                // Perform castling if applicable
                 if (pieceToMove is King && Math.Abs(endY - startY) == 2)
                 {
-                    int rookY = endY == 6 ? 7 : 0;
-                    int rookTargetY = endY == 6 ? 5 : 3;
-                    Piece rook = pieces[startX, rookY];
-                    squares[startX, rookTargetY].BackgroundImage = squares[startX, rookY].BackgroundImage;
-                    pieces[startX, rookTargetY] = rook;
-                    pieces[startX, rookY] = null;
-                    squares[startX, rookY].BackgroundImage = null;
+                    HandleCastling(startX, startY, endX, endY);
                 }
 
-                // After moving the piece and any other logic in MovePiece
-                if (pieceToMove is Pawn && (endX == 0 || endX == 7)) // Check for pawn reaching the opposite end
+                // Promote a pawn if it reaches the opposite end of the board
+                if (pieceToMove is Pawn && (endX == 0 || endX == 7))
                 {
-                    // Show the promotion selection form
-                    using (var promotionForm = new PromotionSelectionForm())
-                    {
-                        var result = promotionForm.ShowDialog();
-
-                        // Determine the chosen piece based on the dialog result
-                        Piece promotedPiece = null;
-                        switch (result)
-                        {
-                            case DialogResult.Yes: // Assume this means Queen
-                                promotedPiece = new Queen(pieceToMove.Color);
-                                break;
-                            case DialogResult.No: // Assume this means Rook
-                                promotedPiece = new Rook(pieceToMove.Color);
-                                break;
-                            case DialogResult.OK: // Assume this means Bishop
-                                promotedPiece = new Bishop(pieceToMove.Color);
-                                break;
-                            case DialogResult.Cancel: // Assume this means Knight
-                                promotedPiece = new Knight(pieceToMove.Color);
-                                break;
-                        }
-
-                        // Replace pawn with the chosen piece
-                        if (promotedPiece != null)
-                        {
-                            pieces[endX, endY] = promotedPiece;
-
-                            // Construct the image key for the new piece
-                            string pieceImageKey = $"{promotedPiece.Color}_{promotedPiece.GetType().Name.ToLower()}";
-                            var promotionImage = (Image)Properties.Resources.ResourceManager.GetObject(pieceImageKey);
-                            if (promotionImage != null)
-                            {
-                                squares[endX, endY].BackgroundImage = promotionImage;
-                            }
-                        }
-                    }
+                    PromotePawn(endX, endY, pieceToMove);
                 }
 
-
-
-                // Switch to the next player's turn
+                // Switch the turn to the other player
                 currentPlayerTurn = currentPlayerTurn == "white" ? "black" : "white";
 
-                // Reset the background color of the last clicked button
-                lastClicked.BackColor = (startX + startY) % 2 == 0 ? Color.White : Color.Gray;
-                Refresh(); // Refresh the form to update the UI
+                // Refresh the form's visual state to reflect changes
+                Refresh();
+                // Update the colors of all squares to match the current theme
+                RefreshSquareColors();
             }
             else
             {
-                // If the move is not valid, reset the background color of the last clicked button
-                lastClicked.BackColor = (startX + startY) % 2 == 0 ? Color.White : Color.Gray;
+                // If the move was invalid, still update the square colors
+                RefreshSquareColors();
+            }
+
+            // Reset the color of the last selected square
+            lastClicked.BackColor = lastClickedColor;
+            // Clear the reference to the last selected square
+            lastClicked = null;
+        }
+
+        // This method refreshes the colors of all squares on the chessboard based on the current theme.
+        private void RefreshSquareColors()
+        {
+            // Iterate through all squares to update their background color
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    // Set the square's color based on its position and the current theme
+                    squares[x, y].BackColor = (x + y) % 2 == 0 ? currentLightColor : currentDarkColor;
+                }
             }
         }
+
+        // This method handles the castling move by moving the rook to the correct position.
+        private void HandleCastling(int startX, int startY, int endX, int endY)
+        {
+            // Retrieve the position of the rook involved in castling
+            int rookY = endY == 6 ? 7 : 0;
+            int rookTargetY = endY == 6 ? 5 : 3;
+            // Move the rook to its new position
+            Piece rook = pieces[startX, rookY];
+            squares[startX, rookTargetY].BackgroundImage = squares[startX, rookY].BackgroundImage;
+            pieces[startX, rookTargetY] = rook;
+            pieces[startX, rookY] = null;
+            squares[startX, rookY].BackgroundImage = null;
+            // Update the square colors after castling
+            RefreshSquareColors();
+        }
+
+        // This method handles the promotion of a pawn to another piece when it reaches the opposite end of the board.
+        private void PromotePawn(int endX, int endY, Piece pawn)
+        {
+            // Display the pawn promotion dialog
+            using (var promotionForm = new PromotionSelectionForm())
+            {
+                var result = promotionForm.ShowDialog();
+                // Determine which piece the pawn is promoted to
+                Piece promotedPiece = GetPromotedPiece(result, pawn.Color);
+                // Replace the pawn with the new piece
+                if (promotedPiece != null)
+                {
+                    pieces[endX, endY] = promotedPiece;
+                    // Fetch the image for the new piece
+                    string pieceImageKey = $"{promotedPiece.Color}_{promotedPiece.GetType().Name.ToLower()}";
+                    var promotionImage = (Image)Properties.Resources.ResourceManager.GetObject(pieceImageKey);
+                    // Update the square with the new piece's image
+                    if (promotionImage != null)
+                    {
+                        squares[endX, endY].BackgroundImage = promotionImage;
+                    }
+                }
+            }
+        }
+
+        // This method returns the piece to which a pawn is promoted based on the user's selection.
+        private Piece GetPromotedPiece(DialogResult result, string color)
+        {
+            // Determine the type of piece selected for promotion
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    return new Queen(color);
+                case DialogResult.No:
+                    return new Rook(color);
+                case DialogResult.OK:
+                    return new Bishop(color);
+                case DialogResult.Cancel:
+                    return new Knight(color);
+                default:
+                    return null;
+            }
+        }
+
 
         // This method adjusts the position of form2 (terminal window) when the main chessboard form is moved.
         public void Chessboard_LocationChanged(object sender, EventArgs e)
