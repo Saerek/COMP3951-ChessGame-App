@@ -1,0 +1,184 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|c:\\users\\jeff\\source\\repos\\comp3951-chessgame-app\\chessgameproject\\chesslog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\chesslog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\chessgameproject\\chessgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\chessgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\unittest\\castingandlogtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\castingandlogtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\unittest\\generaltest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\generaltest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\unittest\\chessboardbackgroundcontrols.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BA0C182-CC2F-4DBC-B07E-EE3FDD8753AE}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\chessboardbackgroundcontrols.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\chessgameproject\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\chessgameproject\\chesslog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\chesslog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\chessgameproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\chessgameproject\\chessgame.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F47FB62B-B803-49BB-9DA9-227C28F05CE6}|ChessGameProject\\ChessGameProject.csproj|solutionrelative:chessgameproject\\chessgame.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GeneralTest.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\GeneralTest.cs",
+              "RelativeDocumentMoniker": "UnitTest\\GeneralTest.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\GeneralTest.cs",
+              "RelativeToolTip": "UnitTest\\GeneralTest.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAcwAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\Program.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\Program.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\Program.cs",
+              "RelativeToolTip": "ChessGameProject\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.725Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CastingAndLogTest.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\CastingAndLogTest.cs",
+              "RelativeDocumentMoniker": "UnitTest\\CastingAndLogTest.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\CastingAndLogTest.cs",
+              "RelativeToolTip": "UnitTest\\CastingAndLogTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.725Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChessGame.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessGame.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\ChessGame.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessGame.cs",
+              "RelativeToolTip": "ChessGameProject\\ChessGame.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAAADsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2024-04-07T00:59:11.726Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChessLog.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessLog.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\ChessLog.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessLog.cs [Design]",
+              "RelativeToolTip": "ChessGameProject\\ChessLog.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.739Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ChessBoardBackgroundControls.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\ChessBoardBackgroundControls.cs",
+              "RelativeDocumentMoniker": "UnitTest\\ChessBoardBackgroundControls.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\UnitTest\\ChessBoardBackgroundControls.cs",
+              "RelativeToolTip": "UnitTest\\ChessBoardBackgroundControls.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.743Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\Properties\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\Properties\\AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\Properties\\AssemblyInfo.cs",
+              "RelativeToolTip": "ChessGameProject\\Properties\\AssemblyInfo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T00:59:11.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ChessLog.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessLog.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\ChessLog.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessLog.cs",
+              "RelativeToolTip": "ChessGameProject\\ChessLog.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEYAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2024-04-07T00:59:11.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ChessGame.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessGame.Designer.cs",
+              "RelativeDocumentMoniker": "ChessGameProject\\ChessGame.Designer.cs",
+              "ToolTip": "C:\\Users\\Jeff\\source\\repos\\COMP3951-ChessGame-App\\ChessGameProject\\ChessGame.Designer.cs",
+              "RelativeToolTip": "ChessGameProject\\ChessGame.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2024-04-07T00:59:11.745Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
