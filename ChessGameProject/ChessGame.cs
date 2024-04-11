@@ -39,12 +39,12 @@ namespace ChessGameProject
         private Color lastClickedColor;
         private OpenAIAPI openAIClient;                 // OpenAIClient object
         List<string> chatHistory = new List<string>();  // Chat history list
-        private const string persona = "You are Magnus, a virtual chess companion. " +
-            "You can answer questions about chess strategies and play a virtual game " +
-            "of chess where all you have to do is tell your move in the format: " +
-            "{piece name} from {current position} to {new position}.";// Persona for OpenAI chat
+        // Persona for OpenAI chat
+        private const string persona = "You are Magnus, a virtual chess companion skilled in chess strategies and gameplay. " +
+            "You can discuss chess tactics, offer advice, and play a virtual game of chess. " +
+            "In the game, moves are communicated in the format: move (piece) from (current position) to (new position)." +
+            "That is all you will have to do during the game.";
         private bool isNewGame = true;                  // Flag to indicate the start of a new game
-
 
         public Chessboard()
         {
@@ -94,42 +94,31 @@ namespace ChessGameProject
             string userInput = txtChatInput.Text.Trim();
             if (!string.IsNullOrEmpty(userInput))
             {
-                // Clear previous game's history if this is the start of a new game
                 if (isNewGame)
                 {
                     chatHistory.Clear();
-                    lstChatHistory.Clear(); // Clear the RichTextBox display
+                    lstChatHistory.Clear(); // Assuming this is a control for displaying chat history
                     isNewGame = false;
                 }
-                // Append user input to RichTextBox and chatHistory
-                lstChatHistory.AppendText("You: " + userInput + "\n"); // Append user input to RichTextBox
-                chatHistory.Add("You: " + userInput); // Add user input to chat history
 
-                txtChatInput.Clear(); // Clear the chat input field
+                // Display user input in the chat history UI
+                lstChatHistory.AppendText("You: " + userInput + "\n");
 
-                try
-                {
-                    // Concatenate the persona description with the user input and chat history
-                    string prompt = "Your Persona: " + persona + "History: " + $"{chatHistory}" + "\nUser Input: " + $"{userInput}";
+                // Initialize or continue a conversation with the chat API
+                var chat = openAIClient.Chat.CreateConversation();
+                chat.Model = Model.GPT4_Turbo; // Specify the model, adjust according to the model you intend to use
+                chat.AppendUserInput(userInput);
 
-                    //var completionResult = await openAIClient.Completions.CreateCompletionAsync(prompt, max_tokens: 350);
-                    var completionResult = await openAIClient.Completions.CreateCompletionAsync(prompt);
+                // Get response from Magnus (the chatbot)
+                string response = await chat.GetResponseFromChatbotAsync();
 
-                    if (completionResult != null)
-                    {
-                        string aiResponse = completionResult.Completions.FirstOrDefault()?.Text.Trim();
-                        // Display the AI response
-                        lstChatHistory.AppendText("OpenAI: " + aiResponse + "\n\n"); // Append AI response
-                        chatHistory.Add("OpenAI: " + aiResponse); // Add AI response to chat history
-                        lstChatHistory.ScrollToCaret(); // Automatically scroll to the bottom
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Handle any exceptions that occur during the API request
-                    lstChatHistory.AppendText("Error: " + ex.Message + "\n"); // Display errors
-                    lstChatHistory.ScrollToCaret(); // Automatically scroll to the bottom
-                }
+                // Display Magnus's response in the chat history UI
+                lstChatHistory.AppendText("Magnus: " + response + "\n\n");
+                lstChatHistory.ScrollToCaret(); // Ensure the latest part of the conversation is visible
+
+                // Optionally, you can manage chat history for context management
+                chatHistory.Add("You: " + userInput); // Keep track of the conversation for any manual context management
+                chatHistory.Add("Magnus: " + response);
             }
         }
 
