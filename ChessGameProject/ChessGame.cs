@@ -43,13 +43,10 @@ namespace ChessGameProject
         private const string persona = "You are Magnus, a virtual chess companion skilled in chess strategies and gameplay. " +
             "You can discuss chess tactics, offer advice, and play a virtual game of chess. " +
             "In the game, moves are communicated in the format: move (piece) from (current position) to (new position)." +
-            "That is all you will have to do during the game.";
-        private bool isNewGame = true;
-        internal static int whiteWins = 0;
-        internal static int blackWins = 0;
-        // Flag to indicate the start of a new game
             "That is all you will have to do during the game."; */
         private bool isNewGame = true;                  // Flag to indicate the start of a new game
+        internal static int whiteWins = 0;
+        internal static int blackWins = 0;
 
         public Chessboard()
         {
@@ -163,7 +160,6 @@ namespace ChessGameProject
                 }
             }
         }
-
 
         // This method calculates the color based on the value and whether it's for light or dark squares.
         public Color CalculateColor(int value, bool isForLightSquares)
