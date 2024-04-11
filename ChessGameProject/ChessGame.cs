@@ -62,7 +62,7 @@ namespace ChessGameProject
             this.FormClosing += Chessboard_FormClosing;             // Add event handler for FormClosing
 
             // Initialize the OpenAI client with your API key
-            string apiKey = "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";
+            string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
                 throw new InvalidOperationException("OpenAI API key is not set in environment variables.");
