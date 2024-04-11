@@ -8,29 +8,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChessGameProject.Properties;
+using System.Net.Http;
+using Newtonsoft.Json;
+using OpenAI_API;
+using OpenAI_API.Chat;
+using OpenAI_API.Completions;
+using OpenAI_API.Models;
 
 /// <summary>
 /// Student Name: Eddie Xu, Samuel Park, Jeffery M Joseph 
 /// Student Number: A01188464, A01342847, A01357857
 /// Professor: Mirela Gutica
-/// Date: 2024-03-23
+/// Date: 2024-04-10
 /// </summary>
 
 namespace ChessGameProject
 {
     public partial class Chessboard : Form
     {
-        public Button[,] squares = new Button[8, 8];   // 8x8 grid of buttons
-        public Piece[,] pieces = new Piece[8, 8];      // 8x8 grid of pieces
-        public Button lastClicked = null;              // Last clicked button
-        public int lastClickedX, lastClickedY;         // Last clicked button's coordinates
-        public string currentPlayerTurn = "white";     // Current player's turn
-        internal static int whiteMoveCount = 0;          // White move count
+        public Button[,] squares = new Button[8, 8];    // 8x8 grid of buttons
+        public Piece[,] pieces = new Piece[8, 8];       // 8x8 grid of pieces
+        public Button lastClicked = null;               // Last clicked button
+        public int lastClickedX, lastClickedY;          // Last clicked button's coordinates
+        public string currentPlayerTurn = "white";      // Current player's turn
+        internal static int whiteMoveCount = 0;         // White move count
         internal static int blackMoveCount = 0;         // Black move count
-        public ChessLog form2;                            // Form2 object  
-        public Color currentLightColor = Color.White; // Default light square color
-        public Color currentDarkColor = Color.Gray; // Default dark square color
+        public ChessLog form2;                          // Form2 object  
+        public Color currentLightColor = Color.White;   // Default light square color
+        public Color currentDarkColor = Color.Gray;     // Default dark square color
         private Color lastClickedColor;
+        private OpenAIAPI openAIClient;                 // OpenAIClient object
+        List<string> chatHistory = new List<string>();  // Chat history list
+        private const string persona = "You are Magnus, a virtual chess companion. " +
+            "You can answer questions about chess strategies and play a virtual game " +
+            "of chess where all you have to do is tell your move in the format: " +
+            "{piece name} from {current position} to {new position}.";// Persona for OpenAI chat
+        private bool isNewGame = true;                  // Flag to indicate the start of a new game
+
 
         public Chessboard()
         {
@@ -43,6 +57,103 @@ namespace ChessGameProject
             form2.Show();               // Show Form2
             this.LocationChanged += Chessboard_LocationChanged;     // Add event handler for LocationChanged
             this.FormClosing += Chessboard_FormClosing;             // Add event handler for FormClosing
+
+            // Initialize the OpenAI client with your API key
+            var apiKey = "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";
+            openAIClient = new OpenAIAPI(apiKey);
+            chatHistory.Clear();        // Clear chat history
+
+            // Event handlers for chat functionality
+            btnSendChat.Click += new EventHandler(btnSendChat_Click);
+            txtChatInput.KeyDown += new KeyEventHandler(txtChatInput_KeyDown);
+        }
+
+        // Activates 'Send' button on click
+        private void btnSendChat_Click(object sender, EventArgs e)
+        {
+            SendMessageToOpenAI();
+        }
+
+        // Activates 'Send' button on Enter key press
+        private void txtChatInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SendMessageToOpenAI();
+                e.SuppressKeyPress = true; // to prevent the beep sound
+            }
+        }
+
+        // This method takes in user input and sends it to the OpenAI API along with the persona and chat history.
+        private async void SendMessageToOpenAI()
+        {
+            string userInput = txtChatInput.Text.Trim();
+            if (!string.IsNullOrEmpty(userInput))
+            {
+                // Clear previous game's history if this is the start of a new game
+                if (isNewGame)
+                {
+                    chatHistory.Clear();
+                    lstChatHistory.Clear(); // Clear the RichTextBox display
+                    isNewGame = false;
+                }
+                // Append user input to RichTextBox and chatHistory
+                lstChatHistory.AppendText("You: " + userInput + "\n"); // Append user input to RichTextBox
+                chatHistory.Add("You: " + userInput); // Add user input to chat history
+
+                txtChatInput.Clear(); // Clear the chat input field
+
+                try
+                {
+                    // Concatenate the persona description with the user input and chat history
+                    string prompt = "Your Persona: " + persona + "History: " + $"{chatHistory}" + "\nUser Input: " + $"{userInput}";
+
+                    //var completionResult = await openAIClient.Completions.CreateCompletionAsync(prompt, max_tokens: 350);
+                    var completionResult = await openAIClient.Completions.CreateCompletionAsync(prompt);
+
+                    if (completionResult != null)
+                    {
+                        string aiResponse = completionResult.Completions.FirstOrDefault()?.Text.Trim();
+                        // Display the AI response
+                        lstChatHistory.AppendText("OpenAI: " + aiResponse + "\n\n"); // Append AI response
+                        chatHistory.Add("OpenAI: " + aiResponse); // Add AI response to chat history
+                        lstChatHistory.ScrollToCaret(); // Automatically scroll to the bottom
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occur during the API request
+                    lstChatHistory.AppendText("Error: " + ex.Message + "\n"); // Display errors
+                    lstChatHistory.ScrollToCaret(); // Automatically scroll to the bottom
+                }
+            }
+        }
+
+        // Method to receive input from the OpenAI API and return the response
+        private async Task<string> GetOpenAIResponse(string userInput)
+        {
+            try
+            {
+                // Sending a completion request to the OpenAI API
+                var completionResult = await openAIClient.Completions.CreateCompletionAsync(
+                    new CompletionRequest(userInput, max_tokens: 300)
+                );
+
+                // Assuming the result has a Choices property which contains the responses
+                if (completionResult != null && completionResult.Completions != null && completionResult.Completions.Any())
+                {
+                    return completionResult.Completions.First().Text.Trim();
+                }
+                else
+                {
+                    return "No response from OpenAI.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors that occur during the API call.
+                return $"Error occurred: {ex.Message}";
+            }
         }
 
         public void UpdateSquareColors(int trackBar1Value, int trackBar2Value)
@@ -349,7 +460,7 @@ namespace ChessGameProject
             pieces = new Piece[8, 8];
             for (int i = 0; i < 8; i++)
             {
-                pieces[1, i] = new Pawn("black");       
+                pieces[1, i] = new Pawn("black");
                 squares[1, i].BackgroundImage = Properties.Resources.black_pawn;    // Set the image of the black pawn
             }
             pieces[0, 0] = new Rook("black");

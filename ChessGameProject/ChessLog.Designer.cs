@@ -103,6 +103,8 @@
             this.ClientSize = new System.Drawing.Size(252, 520);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.form2_listbox_terminal);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ChessLog";
             this.Text = "ChessLog";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_1)).EndInit();
