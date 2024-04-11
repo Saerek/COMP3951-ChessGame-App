@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="CastingAndLogTest.cs" />
     <Compile Include="ChessBoardBackgroundControls.cs" />
+    <Compile Include="ScoreboardTest.cs" />
     <Compile Include="GeneralTest.cs" />
     <Compile Include="PromotionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
