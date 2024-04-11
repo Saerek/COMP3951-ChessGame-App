@@ -44,7 +44,10 @@ namespace ChessGameProject
             "You can discuss chess tactics, offer advice, and play a virtual game of chess. " +
             "In the game, moves are communicated in the format: move (piece) from (current position) to (new position)." +
             "That is all you will have to do during the game.";
-        private bool isNewGame = true;                  // Flag to indicate the start of a new game
+        private bool isNewGame = true;
+        internal static int whiteWins = 0;
+        internal static int blackWins = 0;
+        // Flag to indicate the start of a new game
 
         public Chessboard()
         {
@@ -59,7 +62,7 @@ namespace ChessGameProject
             this.FormClosing += Chessboard_FormClosing;             // Add event handler for FormClosing
 
             // Initialize the OpenAI client with your API key
-            string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            string apiKey = "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";
             if (string.IsNullOrEmpty(apiKey))
             {
                 throw new InvalidOperationException("OpenAI API key is not set in environment variables.");
@@ -269,9 +272,24 @@ namespace ChessGameProject
                 {
                     string winner = pieceToMove.Color == "white" ? "White" : "Black";
                     MessageBox.Show($"{winner} is the Winner", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Increment win count
+                    if (winner == "White")
+                    {
+                        whiteWins++;
+                    }
+                    else
+                    {
+                        blackWins++;
+                    }
+
+                    // Call a method to update the scoreboard
+                    UpdateScoreboard();
+
                     ResetBoard();
                     return;
                 }
+
 
                 // Update the board's logical state
                 pieces[endX, endY] = pieceToMove;
@@ -447,6 +465,13 @@ namespace ChessGameProject
             // Set the current player's turn to white
             currentPlayerTurn = "white";
         }
+
+        public void UpdateScoreboard()
+        {
+            // Assuming form2 is an instance of ChessLog
+            form2.UpdateScoreboardDisplay(whiteWins, blackWins);
+        }
+
 
         public void InitializePieces()
         {
