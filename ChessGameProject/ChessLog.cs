@@ -44,6 +44,12 @@ namespace ChessGameProject
         }
 
 
+        public void UpdateScoreboardDisplay(int whiteWins, int blackWins)
+        {
+            // Controls to display the scores
+            lblWhiteWins.Text = $"White: {whiteWins}";
+            lblBlackWins.Text = $"Black: {blackWins}";
+        }
 
         public void TrackBar_ValueChanged(object sender, EventArgs e)
         {
