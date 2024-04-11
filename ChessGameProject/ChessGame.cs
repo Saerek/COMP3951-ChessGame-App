@@ -39,11 +39,11 @@ namespace ChessGameProject
         private Color lastClickedColor;
         private OpenAIAPI openAIClient;                 // OpenAIClient object
         List<string> chatHistory = new List<string>();  // Chat history list
-        // Persona for OpenAI chat
+        /*// Persona for OpenAI chat
         private const string persona = "You are Magnus, a virtual chess companion skilled in chess strategies and gameplay. " +
             "You can discuss chess tactics, offer advice, and play a virtual game of chess. " +
             "In the game, moves are communicated in the format: move (piece) from (current position) to (new position)." +
-            "That is all you will have to do during the game.";
+            "That is all you will have to do during the game."; */
         private bool isNewGame = true;                  // Flag to indicate the start of a new game
 
         public Chessboard()
@@ -141,34 +141,6 @@ namespace ChessGameProject
                 {
                     this.Invoke(new Action(() => lstChatHistory.AppendText($"Error: {ex.Message}\n")));
                 }
-            }
-        }
-
-
-        // Method to receive input from the OpenAI API and return the response
-        private async Task<string> GetOpenAIResponse(string userInput)
-        {
-            try
-            {
-                // Sending a completion request to the OpenAI API
-                var completionResult = await openAIClient.Completions.CreateCompletionAsync(
-                    new CompletionRequest(userInput, max_tokens: 300)
-                );
-
-                // Assuming the result has a Choices property which contains the responses
-                if (completionResult != null && completionResult.Completions != null && completionResult.Completions.Any())
-                {
-                    return completionResult.Completions.First().Text.Trim();
-                }
-                else
-                {
-                    return "No response from OpenAI.";
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any errors that occur during the API call.
-                return $"Error occurred: {ex.Message}";
             }
         }
 
