@@ -97,30 +97,53 @@ namespace ChessGameProject
                 if (isNewGame)
                 {
                     chatHistory.Clear();
-                    lstChatHistory.Clear(); // Assuming this is a control for displaying chat history
+                    this.Invoke(new Action(() => lstChatHistory.Clear()));
                     isNewGame = false;
                 }
 
-                // Display user input in the chat history UI
-                lstChatHistory.AppendText("You: " + userInput + "\n");
+                // Adding user input to UI and history
+                this.Invoke(new Action(() => lstChatHistory.AppendText($"You: {userInput}\n")));
+                chatHistory.Add($"User: {userInput}");
 
-                // Initialize or continue a conversation with the chat API
-                var chat = openAIClient.Chat.CreateConversation();
-                chat.Model = Model.GPT4_Turbo; // Specify the model, adjust according to the model you intend to use
-                chat.AppendUserInput(userInput);
+                // Ensure UI updates are made on the UI thread.
+                this.Invoke(new Action(() => txtChatInput.Clear()));
 
-                // Get response from Magnus (the chatbot)
-                string response = await chat.GetResponseFromChatbotAsync();
+                try
+                {
+                    // Construct the conversation with the chat API
+                    var chat = openAIClient.Chat.CreateConversation();
+                    chat.Model = Model.GPT4_Turbo; // Specify the model here
 
-                // Display Magnus's response in the chat history UI
-                lstChatHistory.AppendText("Magnus: " + response + "\n\n");
-                lstChatHistory.ScrollToCaret(); // Ensure the latest part of the conversation is visible
+                    // Add the entire conversation history for context
+                    foreach (var message in chatHistory)
+                    {
+                        if (message.StartsWith("User: "))
+                        {
+                            chat.AppendUserInput(message.Substring(5)); // Remove "User: " prefix before sending
+                        }
+                        else if (message.StartsWith("Magnus: "))
+                        {
+                            chat.AppendSystemMessage(message.Substring(8)); // Remove "Magnus: " prefix before sending
+                        }
+                    }
 
-                // Optionally, you can manage chat history for context management
-                chatHistory.Add("You: " + userInput); // Keep track of the conversation for any manual context management
-                chatHistory.Add("Magnus: " + response);
+                    // Add the latest user input
+                    chat.AppendUserInput(userInput);
+
+                    // Get response from the chat API
+                    string response = await chat.GetResponseFromChatbotAsync();
+
+                    // Display response in UI and add to history
+                    this.Invoke(new Action(() => lstChatHistory.AppendText($"Magnus: {response}\n\n")));
+                    chatHistory.Add($"Magnus: {response}");
+                }
+                catch (Exception ex)
+                {
+                    this.Invoke(new Action(() => lstChatHistory.AppendText($"Error: {ex.Message}\n")));
+                }
             }
         }
+
 
         // Method to receive input from the OpenAI API and return the response
         private async Task<string> GetOpenAIResponse(string userInput)
