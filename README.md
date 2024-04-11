@@ -19,23 +19,23 @@ Every piece moves according to standard chess rules, including special moves lik
 The game allows for interactive play using mouse-based inputs for moving pieces.
 #### Advanced Movement Terminal:
 Records and displays each move in standard algebraic notation.
-#### Customizable Chessboard
+#### Customizable Chessboard:
 Players can customize the chessboard's background colors using sliders.
-#### Testing Plan Integration
+#### Testing Plan Integration:
 Comprehensive testing strategies ensure robust performance and adherence to game rules.
 
 ## Testing Plan
 The ChessGame project includes a detailed testing plan based on properties like game field appearance, piece movement, player turn enforcement, and special moves validity. Testing scenarios cover game initialization, piece validation, and endgame conditions.
 
-#### GameField
+#### GameField:
 Tests confirm the correct initialization and reset of the game field.
-#### Player
+#### Player:
 Validation ensures correct player turn enforcement and endgame detection.
-#### Advanced Movement
+#### Advanced Movement:
 Special moves like castling are tested for validity under appropriate conditions.
-#### Movement Terminal
+#### Movement Terminal:
 Movement notation is correctly recorded and displayed.
-#### Background Colour Customization
+#### Background Colour Customization:
 The chessboard color customization feature is validated for user preferences.
 
 ## Contributing
